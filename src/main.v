@@ -2,7 +2,9 @@ module main
 
 fn main() {
 
-	address := "239.255.1.1:5000"
+	address := "224.2.128.0:5000"
+
+	go announce_sdp()
 
 	println("---")
 	println("--- Multicast streaming started on: rtp://${address} ---")
