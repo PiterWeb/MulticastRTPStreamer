@@ -1,4 +1,4 @@
-# RTPStreamer
+# MulticastRTPStreamer
 
 - FFmpeg (Windows Streamer):
 
