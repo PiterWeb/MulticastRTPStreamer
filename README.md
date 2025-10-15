@@ -17,7 +17,7 @@ Launch the binary, then use one of the following receivers:
     ```
     vlc stream.sdp --network-caching=100 --clock-jitter 0
     ```
-  - GUI:
+  - GUI ([VLC Docs](https://prime-5.videolan.me/vlc-user/vlm_files/en/advanced/streaming/sap_session.html#connecting-to-a-sap-stream))
     1. Open VLC
     2. Use shortcut Ctrl+L
     3. Click on SAP tab located at the left panel
