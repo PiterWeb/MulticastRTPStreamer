@@ -10,7 +10,7 @@ Launch the binary, then use one of the following receivers:
 - Gstreamer CLI (Prefered based on performance):</br>
   Prerequisites: Gstreamer runtime installed [Guide](https://gstreamer.freedesktop.org/documentation/installing/index.html?gi-language=c)
 ```
-  gst-launch-1.0 -v udpsrc port=5000 multicast-group=224.2.128.0 auto-multicast=true ! application/x-rtp,encoding-name=H264 ! rtph264depay ! avdec_h264 ! autovideosink
+gst-launch-1.0 -v udpsrc port=5000 multicast-group=224.2.128.0 auto-multicast=true ! application/x-rtp,encoding-name=H264 ! rtph264depay ! avdec_h264 ! autovideosink
 ```
 
 - VLC:</br>
@@ -28,5 +28,5 @@ Launch the binary, then use one of the following receivers:
 - MPV CLI (you need to have the stream.sdp file generated in the folder):</br>
   Prerequisites: MPV installed [Guide](https://mpv.io/installation/)
 ```
-  mpv stream.sdp --no-cache --untimed
+mpv stream.sdp --no-cache --untimed
 ```
