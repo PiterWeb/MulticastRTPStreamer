@@ -1,5 +1,9 @@
 # MulticastRTPStreamer
 
+## General prerequisites:
+
+Having ffmpeg installed & included in the PATH [Guide](https://ffmpeg.org/download.html)
+
 ## How to use
 
 Launch the binary, then use one of the following receivers:
@@ -23,10 +27,16 @@ gst-launch-1.0 -v udpsrc port=5000 multicast-group=224.2.128.0 auto-multicast=tr
     1. Open VLC
     2. Use shortcut Ctrl+L
     3. Click on SAP tab located at the left panel
-    4. Double click on the desired SAP stream  
+    4. Double click on the desired SAP stream
 
 - MPV CLI (you need to have the stream.sdp file generated in the folder):</br>
   Prerequisites: MPV installed [Guide](https://mpv.io/installation/)
 ```
 mpv stream.sdp --no-cache --untimed
 ```
+
+## Technical doc
+
+This project consists on an executable (CLI) written in VLang (or V).
+This CLI uses under the hood FFMPEG binary to record and stream the desktop screen.
+In the executable is also included a SAP announcer that follows most of the [RFC spec](https://datatracker.ietf.org/doc/html/rfc2974) written from scratch.
