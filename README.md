@@ -40,3 +40,18 @@ mpv stream.sdp --no-cache --untimed
 This project consists on an executable (CLI) written in VLang (or V).
 This CLI uses under the hood FFMPEG binary to record and stream the desktop screen.
 In the executable is also included a SAP announcer that follows most of the [RFC spec](https://datatracker.ietf.org/doc/html/rfc2974) written from scratch.
+
+## Build yourself
+
+### Prerequisites
+
+- Having [Vlang](https://vlang.io/) installed on your system
+
+### Instructions
+
+1. Be located on the project root folder
+
+2. Run: 
+```bash
+v -prod -autofree .
+```
