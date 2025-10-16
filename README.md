@@ -7,12 +7,14 @@ Launch the binary, then use one of the following receivers:
 > [!NOTE]  
 > All the CLI receivers have a script inside [scripts folder](./scripts/)
 
-- Gstreamer CLI (Prefered based on performance):
+- Gstreamer CLI (Prefered based on performance):</br>
+  Prerequisites: Gstreamer runtime installed [Guide](https://gstreamer.freedesktop.org/documentation/installing/index.html?gi-language=c)
 ```
   gst-launch-1.0 -v udpsrc port=5000 multicast-group=224.2.128.0 auto-multicast=true ! application/x-rtp,encoding-name=H264 ! rtph264depay ! avdec_h264 ! autovideosink
 ```
 
-- VLC:
+- VLC:</br>
+  Prerequisites: VLC installed [Guide](https://www.videolan.org/vlc/#download)
   - CLI (you need to have the stream.sdp file generated in the folder):
     ```
     vlc stream.sdp --network-caching=100 --clock-jitter 0
@@ -23,7 +25,8 @@ Launch the binary, then use one of the following receivers:
     3. Click on SAP tab located at the left panel
     4. Double click on the desired SAP stream  
 
-- MPV CLI (you need to have the stream.sdp file generated in the folder):
+- MPV CLI (you need to have the stream.sdp file generated in the folder):</br>
+  Prerequisites: MPV installed [Guide](https://mpv.io/installation/)
 ```
   mpv stream.sdp --no-cache --untimed
 ```
