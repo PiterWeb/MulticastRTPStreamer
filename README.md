@@ -53,5 +53,5 @@ In the executable is also included a SAP announcer that follows most of the [RFC
 
 2. Run: 
 ```bash
-v -prod -autofree .
+v -prod .
 ```
