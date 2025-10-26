@@ -5,26 +5,28 @@ import os
 import time
 import rand
 
-fn announce_sdp()! {
-
-	sap_address := "224.2.127.254:9875"
+fn announce_sdp() ! {
+	sap_address := '224.2.127.254:9875'
 
 	mut c := net.dial_udp(sap_address)!
 
-	sdp_file := "./stream.sdp"
+	sdp_file := './stream.sdp'
 
-	mut base_packet := generate_base_packet()
+	mut ip_src_addr := [4]u8{}
+	ip_src_addr[0] = 192
+	ip_src_addr[1] = 168
+	ip_src_addr[2] = 1
+	ip_src_addr[3] = 34
+
+	mut base_packet := generate_base_packet(ip_src_addr)
 
 	for {
-
-		mut packet := []u8{}
-
-		packet << base_packet
+		mut packet := base_packet[..].clone()
 
 		time.sleep(1 * time.second)
 
 		if !os.exists(sdp_file) {
-			base_packet = generate_base_packet()
+			base_packet = generate_base_packet(ip_src_addr)
 			continue
 		}
 
@@ -34,15 +36,14 @@ fn announce_sdp()! {
 
 		c.write(packet) or {}
 	}
-
+	
 }
 
-fn generate_base_packet() []u8 {
-
-	mut packet := []u8{}
+fn generate_base_packet(ip_src_addr [4]u8) [24]u8 {
+	mut packet := [24]u8{}
 
 	// Version: SAPv1
-	v := u8(0b001) 
+	v := u8(0b001)
 
 	// Address: 0 = IPv4
 	a := u8(0b0)
@@ -60,37 +61,31 @@ fn generate_base_packet() []u8 {
 	c := u8(0b0)
 
 	vartec := u8((v << 5) | (a << 4) | (r << 3) | (t << 2) | (e << 1) | c)
-
-	packet << vartec
+	packet[0] = vartec
 
 	// auth len: 0
 	auth_len := u8(0)
+	packet[1] = auth_len
 
-	packet << auth_len
-
-	// msg id hash: random u16      
-	msg_id_hash := [rand.u8(), rand.u8()]
-
-	packet << msg_id_hash
-
+	// msg id hash: random u16 (u8 concat u8)
+	packet[2] = rand.u8()
+	packet[3] = rand.u8()
+	
 	// ipv4 address
-	mut originating_source := []u8{cap: 4}
-	originating_source << 192
-	originating_source << 168
-	originating_source << 1
-	originating_source << 34
-
-	packet << originating_source
-
-	// Payload type: application/sdp (NULL terminated string)
-	mut payload_type := "application/sdp".bytes()
-	// Append NULL byte
-	payload_type << 0
-
-	packet << payload_type
-
+	packet[4] = ip_src_addr[0]
+	packet[5] = ip_src_addr[1]
+	packet[6] = ip_src_addr[2]
+	packet[7] = ip_src_addr[3]
+	
+	// Payload type: application/sdp
+	mut payload_type := 'application/sdp'.bytes()
+	for i, payload_type_byte in payload_type {
+		packet[8 + i] = payload_type_byte
+	}
+	// Append NULL byte (NULL terminated string)
+	packet[8 + payload_type.len] = u8(0)
+	
 	println(packet)
-
+	
 	return packet
-
 }
